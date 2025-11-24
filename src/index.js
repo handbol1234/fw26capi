@@ -1,17 +1,14 @@
-import express from 'express'
+// Use "type: commonjs" in package.json to use CommonJS modules
 
-const app = express()
+const express = require('express');
+const app = express();
+const port = 3000;
 
-app.get('/', (_req, res) => {
-  res.send('Hello Express!')
-})
+app.set('view engine','ejs')
+app.set('views','./views')
 
-app.get('/api/users/:id', (_req, res) => {
-  res.json({ id: _req.params.id })
-})
+require("../rotas/home")(app)
+app.listen(port, () => {
+  console.log(`Example app listening on port ${port}`);
 
-app.get('/api/posts/:postId/comments/:commentId', (_req, res) => {
-  res.json({ postId: _req.params.postId, commentId: _req.params.commentId })
-})
-
-export default app
+});
