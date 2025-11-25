@@ -1,18 +1,15 @@
-module.exports=  (app) => {
-    app.get('/noticias', (req, res) => {
+module.exports = (app)=>{
+    app.get('/noticias', async (req, res)=>{
         try{
-            await app.dbCliente.connect();
-            const resultado = await app.dbCliente.db('portalnoticias')
+            await app.dbClient.connect();
+            const users = await app.dbClient.db('portalnoticias')
             .collection('noticias')
             .find()
             .toArray();
-            res.json(resultado);
-        
+            res.json(users);
         }catch(error){
+            await app.dbClient.close()
             res.send("erro:"+error)
-        }finally{
-            await app.dbCliente.close()
         }
     })
 }
-
